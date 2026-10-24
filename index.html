@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071b16">
+  <meta name="description" content="Satoshis Loan — a Bitcoin-focused loan application platform. Apply, review transparent terms, and track your application.">
+  <title>Satoshis Loan | Bitcoin Lending</title>
+
+  <style>
+    :root {
+      --bg: #061510;
+      --panel: #0c211a;
+      --panel2: #102b22;
+      --green: #19c37d;
+      --gold: #e9bd62;
+      --text: #f5f7f5;
+      --muted: #a9bbb2;
+      --line: #25483a;
+      --radius: 18px;
+      --shadow: 0 18px 55px rgba(0,0,0,.25);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 85% 0%, #123b2b 0, transparent 34%),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: auto;
+    }
+
+    .topbar {
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      background: rgba(4,18,13,.8);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(14px);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 76px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 850;
+      letter-spacing: -.4px;
+      font-size: 1.15rem;
+    }
+
+    .logo {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      background: linear-gradient(135deg, var(--green), #0b8051);
+      color: #052015;
+      font-weight: 950;
+      font-size: 1.35rem;
+      box-shadow: 0 8px 24px #19c37d22;
+    }
+
+    .brand small {
+      display: block;
+      font-size: .68rem;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: .7px;
+      text-transform: uppercase;
+    }
+
+    .navlinks {
+      display: flex;
+      align-items: center;
+      gap: 23px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .navlinks a:hover {
+      color: var(--text);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      background: var(--green);
+      color: #042015;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.06);
+    }
+
+    .btn.secondary {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--line);
+    }
+
+    .btn.gold {
+      background: var(--gold);
+      color: #231a06;
+    }
+
+    .menu {
+      display: none;
+      background: transparent;
+      color: white;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 11px;
+    }
+
+    .hero {
+      padding: 80px 0 58px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 45px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--gold);
+      border: 1px solid #e9bd6240;
+      background: #e9bd620d;
+      border-radius: 100px;
+      padding: 7px 12px;
+      font-size: .8rem;
+      font-weight: 750;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 0 5px #19c37d1c;
+    }
+
+    h1 {
+      font-size: clamp(2.6rem, 5.5vw, 4.7rem);
+      line-height: 1.04;
+      letter-spacing: -2.8px;
+      margin: 22px 0;
+    }
+
+    h1 span {
+      color: var(--green);
+    }
+
+    .lead {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 640px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 28px 0;
+    }
+
+    .note {
+      font-size: .83rem;
+      color: var(--muted);
+      max-width: 590px;
+    }
+
+    .visual {
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, #123526, #0a1d16 65%);
+      padding: 25px;
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .visual:after {
+      content: "₿";
+      position: absolute;
+      font-size: 15rem;
+      right: -25px;
+      top: -70px;
+      color: #19c37d0a;
+      font-weight: 900;
+      pointer-events: none;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: .85rem;
+      gap: 10px;
+    }
+
+    .status {
+      font-size: .75rem;
+      color: var(--gold);
+      background: #e9bd6215;
+      border: 1px solid #e9bd6244;
+      padding: 5px 9px;
+      border-radius: 99px;
+    }
+
+    .amount {
+      font-size: 2.7rem;
+      letter-spacing: -1px;
+      font-weight: 850;
+      margin: 19px 0 2px;
+    }
+
+    .amount small {
+      font-size: .9rem;
+      color: var(--muted);
+      letter-spacing: 0;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 22px 0;
+    }
+
+    .mini {
+      padding: 14px;
+      border: 1px solid var(--line);
+      background: #06171080;
+      border-radius: 14px;
+    }
+
+    .mini span {
+      display: block;
+      color: var(--muted);
+      font-size: .77rem;
+    }
+
+    .mini strong {
+      display: block;
+      font-size: 1.05rem;
+      margin-top: 3px;
+    }
+
+    .progress {
+      height: 7px;
+      background: #25483a;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 13px 0 8px;
+    }
+
+    .progress span {
+      display: block;
+      width: 68%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--green), var(--gold));
+      border-radius: 10px;
+    }
+
+    section {
+      padding: 60px 0;
+    }
+
+    .section-head {
+      max-width: 680px;
+      margin-bottom: 28px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(1.8rem, 3vw, 2.65rem);
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin: 10px 0;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .feature,
+    .panel,
+    .step {
+      background: linear-gradient(150deg, var(--panel), #091a14);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 23px;
+    }
+
+    .icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      background: #19c37d16;
+      color: var(--green);
+      font-size: 1.35rem;
+      margin-bottom: 15px;
+    }
+
+    .feature h3,
+    .step h3 {
+      margin: 0 0 8px;
+      font-size: 1.08rem;
+    }
+
+    .feature p,
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .number {
+      color: var(--gold);
+      font-weight: 900;
+      font-size: .8rem;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .application-grid {
+      display: grid;
+      grid-template-columns: 1fr .8fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .panel h2 {
+      margin: 0 0 8px;
+      font-size: 1.6rem;
+      letter-spacing: -.6px;
+    }
+
+    .panel > p {
+      color: var(--muted);
+      margin-top: 0;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: .86rem;
+      font-weight: 700;
+      color: #e3ece7;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid #315343;
+      background: #061710;
+      color: var(--text);
+      padding: 12px 13px;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px #19c37d19;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: .83rem;
+      color: var(--muted);
+    }
+
+    .checkbox input {
+      width: auto;
+      margin-top: 5px;
+    }
+
+    .form-message {
+      display: none;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 14px;
+      background: #19c37d15;
+      border: 1px solid #19c37d55;
+      color: #c7f7df;
+      overflow-wrap: anywhere;
+    }
+
+    .warning {
+      border: 1px solid #e9bd624a;
+      background: #e9bd620d;
+      border-radius: 14px;
+      padding: 17px;
+      color: #f1dfb9;
+      font-size: .88rem;
+    }
+
+    .warning strong {
+      display: block;
+      color: var(--gold);
+      margin-bottom: 5px;
+    }
+
+    .payment-box {
+      margin-top: 15px;
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #061710;
+    }
+
+    .payment-box h3 {
+      margin: 0 0 7px;
+    }
+
+    .payment-box p {
+      color: var(--muted);
+      font-size: .88rem;
+      margin: 0 0 10px;
+    }
+
+    .contact-link {
+      color: var(--green);
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .faq {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    details {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 16px 18px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 750;
+    }
+
+    details p {
+      color: var(--muted);
+      font-size: .9rem;
+      margin-bottom: 0;
+    }
+
+    .cta {
+      border: 1px solid #2b644b;
+      background: linear-gradient(110deg, #103c2b, #0b2118);
+      border-radius: 23px;
+      padding: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .cta h2 {
+      margin: 0 0 7px;
+      font-size: 1.8rem;
+    }
+
+    .cta p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding: 28px 0;
+      color: var(--muted);
+      font-size: .85rem;
+    }
+
+    .footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 17px;
+      flex-wrap: wrap;
+    }
+
+    .legal {
+      font-size: .78rem;
+      color: #849b90;
+      margin-top: 20px;
+      max-width: 950px;
+    }
+
+    @media (max-width: 850px) {
+      .hero-grid,
+      .application-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 52px;
+      }
+
+      .cards,
+      .steps {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .navlinks {
+        display: none;
+        position: absolute;
+        left: 4%;
+        right: 4%;
+        top: 70px;
+        padding: 18px;
+        background: #0b211a;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .navlinks.open {
+        display: flex;
+      }
+
+      .menu {
+        display: block;
+      }
+
+      .nav > .btn {
+        display: none;
+      }
+    }
+
+    @media (max-width: 560px) {
+      h1 {
+        letter-spacing: -1.5px;
+      }
+
+      .cards,
+      .steps,
+      .faq,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+      }
+
+      .visual {
+        padding: 19px;
+      }
+
+      .amount {
+        font-size: 2.2rem;
+      }
+
+      .cta {
+        display: block;
+        padding: 24px;
+      }
+
+      .cta .btn {
+        margin-top: 18px;
+        width: 100%;
+      }
+
+      section {
+        padding: 45px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="container nav">
+
+      <a class="brand" href="#home" aria-label="Satoshis Loan home">
+        <span class="logo">₿</span>
+        <span>
+          SATOSHIS LOAN
+          <small>A SatStack-inspired project</small>
+        </span>
+      </a>
+
+      <nav class="navlinks" id="navlinks">
+        <a href="#how">How It Works</a>
+        <a href="#apply">Apply</a>
+        <a href="#payments">Payments</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <a class="btn" href="#apply">Apply for a Loan</a>
+
+      <button
+        class="menu"
+        id="menuBtn"
+        aria-label="Open navigation menu"
+        aria-expanded="false">
+        ☰
+      </button>
+
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+
+        <div>
+          <div class="eyebrow">
+            <span class="dot"></span>
+            Bitcoin-Focused Loan Applications
+          </div>
+
+          <h1>
+            Access Funds.<br>
+            <span>Understand Every Sat.</span>
+          </h1>
+
+          <p class="lead">
+            A simple place to submit a loan request, review proposed terms,
+            and follow your application. Clear information comes first.
+            Every request is subject to review, available funding, and
+            applicable laws.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn" href="#apply">Start an Application ↗</a>
+            <a class="btn secondary" href="#how">See How It Works</a>
+          </div>
+
+          <p class="note">
+            This website is a front-end starter template. It does not
+            currently issue loans, accept payments, or connect automatically
+            to a Bitcoin wallet. An application is not a loan approval.
+          </p>
+        </div>
+
+        <div class="visual">
+          <div class="card-top">
+            <span>Example Loan Overview</span>
+            <span class="status">Illustrative Only</span>
+          </div>
+
+          <div class="amount">
+            100,000 <small>sats requested</small>
+          </div>
+
+          <div style="color:var(--muted);font-size:.88rem">
+            Sample amount — not a loan offer
+          </div>
+
+          <div class="mini-grid">
+
+            <div class="mini">
+              <span>Selected Term</span>
+              <strong>30 Days</strong>
+            </div>
+
+            <div class="mini">
+              <span>Application Status</span>
+              <strong>Pending Review</strong>
+            </div>
+
+            <div class="mini">
+              <span>Terms</span>
+              <strong>Shown Before Agreement</strong>
+            </div>
+
+            <div class="mini">
+              <span>Funding</span>
+              <strong>Subject to Availability</strong>
+            </div>
+
+          </div>
+
+          <div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted)">
+            <span>Application Progress (Example)</span>
+            <span>Demo</span>
+          </div>
+
+          <div class="progress">
+            <span></span>
+          </div>
+
+          <div style="font-size:.78rem;color:var(--muted)">
+            This demo does not request upfront payments.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features">
+      <div class="container">
+
+        <div class="section-head">
+          <div class="eyebrow">Built Around Clarity</div>
+          <h2>A Straightforward Process, Without Surprises.</h2>
+          <p>
+            Review the conditions before you commit. The service should
+            only launch in countries where the operator is legally allowed
+            to provide it.
+          </p>
+        </div>
+
+        <div class="cards">
+
+          <article class="feature">
+            <div class="icon">◎</div>
+            <h3>Transparent Terms</h3>
+            <p>
+              The loan amount, repayment date, fees, total repayment,
+              and late-payment conditions should be clearly displayed
+              before an agreement is signed.
+            </p>
+          </article>
+
+          <article class="feature">
+            <div class="icon">⌁</div>
+            <h3>Manual Review</h3>
+            <p>
+              Applications can be reviewed by an administrator before
+              a decision. Submitting a form does not guarantee approval.
+            </p>
+          </article>
+
+          <article class="feature">
+            <div class="icon">₿</div>
+            <h3>Satoshi-Focused</h3>
+            <p>
+              Designed for Bitcoin users, with clear units and a future
+              path to a secure wallet workflow after technical review.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how">
+      <div class="container">
+
+        <div class="section-head">
+          <div class="eyebrow">How It Works</div>
+          <h2>Three Simple Steps</h2>
+          <p>
+            This is the proposed user journey for the first version
+            of Satoshis Loan.
+          </p>
+        </div>
+
+        <div class="steps">
+
+          <article class="step">
+            <div class="number">STEP 01</div>
+            <h3>Submit Your Request</h3>
+            <p>
+              Enter your contact details, requested amount, country,
+              and preferred repayment period.
+            </p>
+          </article>
+
+          <article class="step">
+            <div class="number">STEP 02</div>
+            <h3>Review the Decision</h3>
+            <p>
+              The administrator reviews eligibility, funding availability,
+              and applicable legal requirements.
+            </p>
+          </article>
+
+          <article class="step">
+            <div class="number">STEP 03</div>
+            <h3>Review the Agreement</h3>
+            <p>
+              If approved, review the written agreement and total repayment.
+              Do not pay any fee until the terms and legality are verified.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- APPLICATION FORM -->
+    <section id="apply">
+      <div class="container application-grid">
+
+        <div class="panel">
+
+          <h2>Loan Application</h2>
+
+          <p>
+            Complete this demo form to prepare a request. This version
+            does not transmit information to a server or create a real
+            application.
+          </p>
+
+          <form id="loanForm">
+
+            <div class="form-grid">
+
+              <div class="field">
+                <label for="fullName">Full Name</label>
+                <input
+                  id="fullName"
+                  name="fullName"
+                  autocomplete="name"
+                  required
+                  placeholder="Your full name">
+              </div>
+
+              <div class="field">
+                <label for="email">Email Address</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                  placeholder="you@example.com">
+              </div>
+
+              <div class="field">
+                <label for="country">Country of Residence</label>
+                <select id="country" name="country" required>
+                  <option value="">Choose a country</option>
+                  <option>Senegal</option>
+                  <option>United States</option>
+                  <option>United Kingdom</option>
+                  <option>Canada</option>
+                  <option>France</option>
+                  <option>Nigeria</option>
+                  <option>Ghana</option>
+                  <option>Other</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="amount">Requested Amount (Sats)</label>
+                <input
+                  id="amount"
+                  name="amount"
+                  type="number"
+                  min="1000"
+                  step="1"
+                  required
+                  placeholder="100000">
+              </div>
+
+              <div class="field">
+                <label for="term">Preferred Loan Term</label>
+                <select id="term" name="term" required>
+                  <option value="">Choose a term</option>
+                  <option value="30">30 Days</option>
+                  <option value="60">60 Days</option>
+                  <option value="90">90 Days</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="repayment">Repayment Preference</label>
+                <select id="repayment" name="repayment" required>
+                  <option value="">Choose an option</option>
+                  <option>One Payment</option>
+                  <option>Installments (Subject to Approval)</option>
+                </select>
+              </div>
+
+              <div class="field full">
+                <label for="purpose">Purpose of the Loan (Optional)</label>
+                <textarea
+                  id="purpose"
+                  name="purpose"
+                  placeholder="Briefly explain what the funds are for. Do not include passwords or wallet recovery phrases."></textarea>
+              </div>
+
+              <div class="field full">
+                <label class="checkbox">
+                  <input type="checkbox" id="consent" required>
+                  <span>
+                    I understand that this is a demo form, my request is
+                    not guaranteed, and I must review the final terms
+                    before agreeing or making any payment.
+                  </span>
+                </label>
+              </div>
+
+              <div class="field full">
+                <button class="btn" type="submit">
+                  Prepare Request Summary
+                </button>
+
+                <div
+                  class="form-message"
+                  id="formMessage"
+                  role="status"
+                  aria-live="polite">
+                </div>
+              </div>
+
+            </div>
+          </form>
+        </div>
+
+        <!-- PAYMENT SECTION -->
+        <aside class="panel" id="payments">
+
+          <h2>Offline Payment & Contact</h2>
+
+          <p>
+            Contact the project using the email address provided below.
+            Payment instructions should only be provided after the service,
+            funding, and written terms have been verified.
+          </p>
+
+          <div class="warning">
+            <strong>Safety First</strong>
+            Never send a fee to unlock a loan unless you have verified
+            the operator, received written terms, and confirmed that the
+            fee is lawful. This demo does not accept payments.
+          </div>
+
+          <div class="payment-box">
+            <h3>Contact by Email</h3>
+
+            <p>
+              For questions about Satoshis Loan or to request information
+              about supported manual payment methods, contact:
+            </p>
+
+            <a
+              class="contact-link"
+              href="mailto:satstack.sathoshi@gmail.com">
+              satstack.sathoshi@gmail.com
+            </a>
+          </div>
+
+          <div class="payment-box">
+            <h3>Manual Payment Methods</h3>
+
+            <p>
+              Bitcoin Lightning, Wave, Orange Money, or bank transfer
+              may be considered only where available, lawful, and
+              properly supported.
+            </p>
+
+            <p>
+              An email address is a contact method, not automatically
+              a Bitcoin payment destination. Confirm the correct payment
+              method before sending funds.
+            </p>
+          </div>
+
+          <div class="payment-box">
+            <h3>Before a Loan Is Activated</h3>
+
+            <p>
+              Confirm funding availability, eligibility checks, applicable
+              licensing requirements, the written agreement, fees,
+              repayment schedule, and refund policy.
+            </p>
+          </div>
+
+        </aside>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="container">
+
+        <div class="section-head">
+          <div class="eyebrow">Frequently Asked Questions</div>
+          <h2>Know Before You Apply</h2>
+        </div>
+
+        <div class="faq">
+
+          <details>
+            <summary>Does submitting an application guarantee a loan?</summary>
+            <p>
+              No. An application is only a request. Approval depends on
+              eligibility, legal requirements, and available funds.
+            </p>
+          </details>
+
+          <details>
+            <summary>Do I need to pay an upfront fee?</summary>
+            <p>
+              This demo does not ask for payment. Any future fee must be
+              lawful, disclosed in advance, and included in the written
+              terms. Do not pay based only on a website form or email.
+            </p>
+          </details>
+
+          <details>
+            <summary>Can I apply from any country?</summary>
+            <p>
+              The website may be accessible worldwide, but lending cannot
+              automatically be offered in every country. Availability
+              must be checked country by country.
+            </p>
+          </details>
+
+          <details>
+            <summary>Can I repay in installments?</summary>
+            <p>
+              The form records your preference only. Installments are
+              available only if offered in the final agreement.
+            </p>
+          </details>
+
+          <details>
+            <summary>Does this website connect to my Bitcoin wallet?</summary>
+            <p>
+              No. Never enter a seed phrase, private key, exchange password,
+              or wallet recovery phrase into a loan application.
+            </p>
+          </details>
+
+          <details>
+            <summary>How do I contact support?</summary>
+            <p>
+              Email
+              <a
+                class="contact-link"
+                href="mailto:satstack.sathoshi@gmail.com">
+                satstack.sathoshi@gmail.com
+              </a>.
+              Do not email sensitive identity documents until a secure
+              and appropriate process has been established.
+            </p>
+          </details>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CALL TO ACTION -->
+    <section>
+      <div class="container">
+
+        <div class="cta">
+
+          <div>
+            <h2>Start with Clear Information.</h2>
+            <p>
+              Prepare a request and understand the conditions before
+              making a commitment.
+            </p>
+          </div>
+
+          <a class="btn gold" href="#apply">
+            Prepare an Application ↗
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+
+      <div class="footer-row">
+
+        <a class="brand" href="#home">
+          <span class="logo">₿</span>
+          <span>
+            SATOSHIS LOAN
+            <small>A SatStack-inspired project</small>
+          </span>
+        </a>
+
+        <div class="footer-links">
+          <a href="#how">How It Works</a>
+          <a href="#apply">Apply</a>
+          <a href="#faq">FAQ</a>
+          <a href="mailto:satstack.sathoshi@gmail.com">Contact</a>
+        </div>
+
+        <span>© <span id="year"></span> Satoshis Loan</span>
+
+      </div>
+
+      <p class="legal">
+        IMPORTANT NOTICE: This is a front-end starter template, not a live
+        lending service, financial product, or legal offer. The form operates
+        locally in your browser and does not save or send data. No loan is
+        approved or disbursed by this page. Before launch, add a secure
+        backend, privacy notice, terms of service, appropriate identity and
+        security controls, payment verification, and country-specific legal
+        review. Do not advertise guaranteed approval or collect advance fees
+        unless the practice is lawful and the loan can actually be funded.
+      </p>
+
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    const menuBtn = document.getElementById("menuBtn");
+    const navlinks = document.getElementById("navlinks");
+
+    menuBtn.addEventListener("click", () => {
+      const isOpen = navlinks.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    navlinks.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navlinks.classList.remove("open");
+        menuBtn.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    const form = document.getElementById("loanForm");
+    const message = document.getElementById("formMessage");
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (!form.reportValidity()) {
+        return;
+      }
+
+      const data = new FormData(form);
+      const amount = Number(data.get("amount")).toLocaleString("en-US");
+
+      const summary = [
+        "DEMO REQUEST SUMMARY",
+        "Name: " + data.get("fullName"),
+        "Email: " + data.get("email"),
+        "Country: " + data.get("country"),
+        "Requested Amount: " + amount + " sats",
+        "Preferred Term: " + data.get("term") + " days",
+        "Repayment Preference: " + data.get("repayment"),
+        "Purpose: " + (data.get("purpose") || "Not provided"),
+        "",
+        "This is only a local summary.",
+        "No application was submitted.",
+        "No data was sent to a server."
+      ].join("\n");
+
+      message.style.display = "block";
+
+      const heading = document.createElement("p");
+      heading.textContent =
+        "Your demo summary is ready. Nothing was sent or saved.";
+
+      const pre = document.createElement("pre");
+      pre.style.whiteSpace = "pre-wrap";
+      pre.style.overflowWrap = "anywhere";
+      pre.style.fontFamily = "inherit";
+      pre.style.marginBottom = "0";
+      pre.textContent = summary;
+
+      message.replaceChildren(heading, pre);
+    });
+  </script>
+
+</body>
+</html>￼Enter
